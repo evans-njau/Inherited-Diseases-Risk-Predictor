@@ -107,6 +107,32 @@ from sklearn.linear_model import LogisticRegression
 model = LogisticRegression()
 model.fit(X_train, y_train)
 ```
+### Model Persistence
+
+- The trained model is saved using joblib for reuse without retraining.
+
+**Saving the Model:**
+```
+import joblib
+joblib.dump(model, 'disease_risk_model.pkl')
+joblib.dump(scaler, 'scaler.pkl')
+```
+**Loading the Model**
+```
+model = joblib.load('disease_risk_model.pkl')
+scaler = joblib.load('scaler.pkl')
+```
+**Making Predictions**
+```
+input = [[22, 20.6, 120, 170, 3, 0]]
+
+input_scaled = scaler.transform(pd.DataFrame(input, columns = Features.columns))
+output = model.predict(input_scaled)
+if output == 1:
+    print("Prone to inherited diseases")
+else:
+    print("Not prone to inherited diseases")
+```
 ### Requirements
 
 - Python 3.x
